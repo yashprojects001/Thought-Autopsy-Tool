@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Thought Autopsy Tool</title>
+<style>
+    body {
+        margin: 0;
+        font-family: 'Segoe UI', sans-serif;
+        background: radial-gradient(circle at top, #111 0%, #000 60%);
+        color: #eee;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 900px;
+        background: rgba(20,20,20,0.9);
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 0 40px rgba(255,0,0,0.1);
+    }
+
+    h1 {
+        text-align: center;
+        letter-spacing: 2px;
+        margin-bottom: 10px;
+    }
+
+    .subtitle {
+        text-align: center;
+        opacity: 0.6;
+        margin-bottom: 25px;
+        font-size: 14px;
+    }
+
+    textarea {
+        width: 100%;
+        height: 120px;
+        background: #0b0b0b;
+        border: 1px solid #333;
+        border-radius: 10px;
+        color: #eee;
+        padding: 15px;
+        font-size: 16px;
+        resize: none;
+        outline: none;
+    }
+
+    button {
+        margin-top: 20px;
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        border: none;
+        background: linear-gradient(135deg, #ff0033, #ff6600);
+        color: #000;
+        font-weight: bold;
+        letter-spacing: 1px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .results {
+        margin-top: 30px;
+        display: none;
+        animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(10px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .card {
+        background: #0d0d0d;
+        border-left: 4px solid #ff3300;
+        padding: 15px;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .label {
+        font-size: 13px;
+        opacity: 0.6;
+        margin-bottom: 6px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .value {
+        font-size: 16px;
+        line-height: 1.4;
+    }
+
+    .weight {
+        height: 8px;
+        background: #222;
+        border-radius: 20px;
+        overflow: hidden;
+        margin-top: 8px;
+    }
+
+    .weight span {
+        display: block;
+        height: 100%;
+        background: linear-gradient(90deg, #ff0033, #ffcc00);
+        width: 0%;
+        transition: width 1s ease;
+    }
+
+    footer {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 12px;
+        opacity: 0.4;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>THOUGHT AUTOPSY</h1>
+    <div class="subtitle">Dissect the thought. Examine the damage.</div>
+
+    <textarea id="thought" placeholder="Type the thought that keeps looping in your head..."></textarea>
+    <button onclick="analyze()">BEGIN AUTOPSY</button>
+
+    <div class="results" id="results">
+        <div class="card">
+            <div class="label">Core Belief</div>
+            <div class="value" id="belief"></div>
+        </div>
+
+        <div class="card">
+            <div class="label">Hidden Assumption</div>
+            <div class="value" id="assumption"></div>
+        </div>
+
+        <div class="card">
+            <div class="label">Cognitive Distortion</div>
+            <div class="value" id="distortion"></div>
+        </div>
+
+        <div class="card">
+            <div class="label">Emotional Weight</div>
+            <div class="value" id="emotion"></div>
+            <div class="weight"><span id="bar"></span></div>
+        </div>
+    </div>
+
+    <footer>Not therapy. Just clarity.</footer>
+</div>
+
+<script>
+function analyze() {
+    const text = document.getElementById("thought").value.trim();
+    if (!text) return;
+
+    const beliefs = [
+        "I am not enough",
+        "Others are ahead of me",
+        "Failure defines me",
+        "I must be perfect",
+        "Something is wrong with me"
+    ];
+
+    const assumptions = [
+        "This feeling will never change",
+        "Everyone sees my weakness",
+        "I should be better by now",
+        "If I fail once, I fail forever",
+        "Rest equals laziness"
+    ];
+
+    const distortions = [
+        "Overgeneralization",
+        "Catastrophizing",
+        "Mind Reading",
+        "All-or-Nothing Thinking",
+        "Emotional Reasoning"
+    ];
+
+    const belief = beliefs[Math.floor(Math.random() * beliefs.length)];
+    const assumption = assumptions[Math.floor(Math.random() * assumptions.length)];
+    const distortion = distortions[Math.floor(Math.random() * distortions.length)];
+    const weight = Math.min(90, Math.max(30, text.length));
+
+    document.getElementById("belief").innerText = belief;
+    document.getElementById("assumption").innerText = assumption;
+    document.getElementById("distortion").innerText = distortion;
+    document.getElementById("emotion").innerText = weight + "% psychological load detected";
+
+    document.getElementById("results").style.display = "block";
+    setTimeout(() => {
+        document.getElementById("bar").style.width = weight + "%";
+    }, 200);
+}
+</script>
+
+</body>
+</html>
